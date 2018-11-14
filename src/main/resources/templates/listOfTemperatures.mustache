@@ -1,5 +1,11 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <body>
+<div>
+    <form action="/logout" method="post">
+        <input type="submit" value="Sign Out"/>
+        <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
+    </form>
+</div>
 <div>
     Список температур
 </div>

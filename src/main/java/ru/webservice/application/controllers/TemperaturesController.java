@@ -16,11 +16,10 @@ public class TemperaturesController {
     @Autowired
     private TemperatureMessageRepo messageRepo;
 
-    @GetMapping
+    @RequestMapping("/")
     public String main(Map<String, Object> model) {
         Iterable<TemperatureMessage> messages = messageRepo.findAll();
         model.put("messages", messages);
         return "listOfTemperatures";
     }
-
 }
