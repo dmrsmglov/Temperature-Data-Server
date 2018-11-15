@@ -13,8 +13,12 @@ import java.util.Map;
 @RequestMapping("/temperatures")
 public class TemperaturesController {
 
+    private final TemperatureMessageRepo messageRepo;
+
     @Autowired
-    private TemperatureMessageRepo messageRepo;
+    public TemperaturesController(TemperatureMessageRepo messageRepo) {
+        this.messageRepo = messageRepo;
+    }
 
     @RequestMapping("/")
     public String main(Map<String, Object> model) {
