@@ -5,9 +5,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.webservice.application.domain.TemperatureMessage;
 import ru.webservice.application.repositories.TemperatureMessageRepo;
+import ru.webservice.application.validation.CoordinateValidation;
+import ru.webservice.application.validation.TemperatureValidation;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -15,7 +16,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/temperatures")
 public class TemperaturesController {
-
     private final TemperatureMessageRepo messageRepo;
 
     @Autowired
@@ -38,13 +38,19 @@ public class TemperaturesController {
 
     @PostMapping("/newTemperatureData")
     @PreAuthorize("hasAuthority('SENSOR')")
-    public String temperatureSave(
-            @RequestParam String temperature,
-            @RequestParam String coordinates,
+    public String temperatureSave(TemperatureMessage temperatureMessage,
             Map<String, Object> model) {
-        TemperatureMessage temperatureMessage = new TemperatureMessage(temperature, coordinates,
+        CoordinateValidation coordinateValidation = new CoordinateValidation(temperatureMessage.getCoordinates());
+        TemperatureValidation temperatureValidation = new TemperatureValidation(temperatureMessage.getTemperature());
+        if (!coordinateValidation.isValid() || !temperatureValidation.isValid()) {
+            model.put("validation error", "Your temperature data is invalid!");
+            return "newTemperatureData";
+        }
+        temperatureMessage.setTime(
                 Calendar.getInstance().get(Calendar.MILLISECOND));
+
         messageRepo.save(temperatureMessage);
         return "redirect:/temperatures";
     }
+
 }
