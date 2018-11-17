@@ -24,7 +24,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/user")
-    public String registration() {
+    public String registrationAsAUser() {
         return "userRegistration";
     }
 

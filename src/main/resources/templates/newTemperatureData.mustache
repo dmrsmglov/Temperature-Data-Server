@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+Post new temperature data
+{{#message}}
+    {{message}}
+{{/message}}
+<form action="/temperatures/newTemperatureData" method="post">
+    <div><label> Temperature: <input type="text" name="temperature"/> </label></div>
+    <div><label> Coordinates: <input type="text" name="coordinates"/> </label></div>
+    <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
+    <div><input type="submit" value="Post"></div>
+</form>
+<a href="/temperatures">Go back</a>
+</body>
+</html>

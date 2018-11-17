@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 public class TemperatureMessage {
@@ -11,30 +12,41 @@ public class TemperatureMessage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Integer temperature;
+    private String temperature;
+    private Integer time;
     private String coordinates;
 
     public TemperatureMessage() {
     }
 
-    public TemperatureMessage(Integer temperature, String coordinates) {
+    public TemperatureMessage(String temperature, String coordinates, Integer time) {
         this.temperature = temperature;
         this.coordinates = coordinates;
+        this.time = time;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getTime() {
+        return time;
     }
 
-    public Integer getTemperature() {
+    public void setTime(Integer time) {
+        this.time = time;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+
+    }
+
+    public String getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(Integer temperature) {
+    public void setTemperature(String temperature) {
         this.temperature = temperature;
     }
 
