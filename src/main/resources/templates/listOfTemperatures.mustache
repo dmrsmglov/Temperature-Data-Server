@@ -2,7 +2,7 @@
 <body>
 <div>
     <form action="/logout" method="post">
-        <input type="submit" value="Sign Out"/>
+        <div><input type="submit" value="Sign Out"/></div>
         <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
     </form>
 </div>
@@ -10,7 +10,20 @@
     <a href="/temperatures/newTemperatureData">Post new Temperature Data</a>
 </div>
 <div>
-    Список температур
+    {{#validation error}}
+        {{validation error}}
+    {{/validation error}}
+</div>
+
+<div>
+    <form action="/temperatures/filter" method="post">
+        <div><label> Your Location: <input type="text" name="coordinates"/> </label></div>
+        <div><input type="submit" value="Filter"/></div>
+        <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
+    </form>
+</div>
+<div>
+    Список температур:
 </div>
     {{#messages}}
     <div>
