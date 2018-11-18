@@ -1,11 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Display temperature page</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
 <body>
-<div>
-    <form action="/logout" method="post">
-        <div><input type="submit" value="Sign Out"/></div>
-        <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
-    </form>
-</div>
 <div>
     <a href="/temperatures/newTemperatureData">Post new Temperature Data</a>
 </div>
@@ -18,20 +17,28 @@
 <div>
     <form action="/temperatures/filter" method="post">
         <div><label> Your Location: <input type="text" name="coordinates"/> </label></div>
-        <div><input type="submit" value="Filter"/></div>
+        <div class="list"><input type="submit" value="Filter"/></div>
         <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
     </form>
 </div>
 <div>
-    Список температур:
-</div>
+    List of last 10 temperature data:
+
     {{#messages}}
     <div>
         <span>Temperature: {{temperature}}</span>
     </div>
-    <div>
+    <div class="list">
         <span>Coordinates: {{coordinates}}</span>
     </div>
     {{/messages}}
+
+</div>
+<div>
+    <form action="/logout" method="post">
+        <div><input type="submit" value="Sign Out"/></div>
+        <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
+    </form>
+</div>
 </body>
 </html>

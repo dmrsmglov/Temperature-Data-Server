@@ -1,13 +1,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
 <body>
-Login page
-<form action="/login" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
-<a href="/registration/user"> Sign up as a user</a>
-<a href="/registration/sensor"> Sign up as a sensor</a>
+<div>
+    Login page
+</div>
+<div>
+    <form action="/login" method="post">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div class="list"><label> Password: <input type="password" name="password"/> </label></div>
+        <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
+        <div class="list"><input type="submit" value="Sign In"/></div>
+    </form>
+</div>
+<div>
+    <a href="/registration/user"> Sign up as a user</a>
+</div>
+<div class = "list">
+    <a href="/registration/sensor"> Sign up as a sensor</a>
+</div>
 </body>
 </html>

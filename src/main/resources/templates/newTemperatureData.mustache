@@ -1,17 +1,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>New temperature data page</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
 <body>
 <div>
     Post new temperature data
 </div>
+<div>
 {{#validation error}}
     {{validation error}}
 {{/validation error}}
+</div>
+<div>
 <form action="/temperatures/newTemperatureData" method="post">
     <div><label> Temperature: <input type="text" name="temperature"/> </label></div>
-    <div><label> Coordinates: <input type="text" name="coordinates"/> </label></div>
+    <div class = "list"><label> Coordinates: <input type="text" name="coordinates"/> </label></div>
     <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
-    <div><input type="submit" value="Post"></div>
+    <div class = "list"><input type="submit" value="Post"></div>
 </form>
+</div>
+<div>
 <a href="/temperatures">Go back</a>
+</div>
 </body>
 </html>

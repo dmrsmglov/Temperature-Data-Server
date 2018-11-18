@@ -1,16 +1,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User registration page</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
 <body>
-
-Add new user
-{{#message}}
+<div>
+    Add new user
+</div>
+<div>
+    {{#message}}
     {{message}}
-{{/message}}
-<form action="/registration/user" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
-    <div><input type="submit" value="Sign Up"/></div>
-</form>
-<a href="/login">Go back</a>
+    {{/message}}
+</div>
+<div>
+    <form action="/registration/user" method="post">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div class = "list"><label> Password: <input type="password" name="password"/> </label></div>
+        <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
+        <div class = "list"><input type="submit" value="Sign Up"/></div>
+    </form>
+</div>
+<div>
+    <a href="/login">Go back</a>
+</div>
 </body>
 </html>
