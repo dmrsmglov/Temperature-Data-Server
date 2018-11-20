@@ -20,10 +20,16 @@ import java.util.stream.StreamSupport;
 @RequestMapping("/temperatures")
 public class TemperaturesController {
     private final TemperatureMessageRepo messageRepo;
+    private final CoordinateValidation coordinateValidation;
+    private final TemperatureValidation temperatureValidation;
 
     @Autowired
-    public TemperaturesController(TemperatureMessageRepo messageRepo) {
+    public TemperaturesController(TemperatureMessageRepo messageRepo,
+                                  CoordinateValidation coordinateValidation,
+                                  TemperatureValidation temperatureValidation) {
         this.messageRepo = messageRepo;
+        this.coordinateValidation = coordinateValidation;
+        this.temperatureValidation = temperatureValidation;
     }
 
     @RequestMapping
@@ -40,9 +46,8 @@ public class TemperaturesController {
             Map<String, Object> model) {
         Iterable<TemperatureMessage> messages;
         if (!coordinates.equals("none")) {
-            CoordinateValidation coordinateValidation = new CoordinateValidation(coordinates);
-            if (!coordinateValidation.isValid()) {
-                model.put("validation error", "Your coordinates is invalid!");
+            if (!coordinateValidation.isValid(coordinates)) {
+                model.put("validation error", "Your coordinates are invalid!");
                 return "listOfTemperatures";
             }
             messages = messageRepo.findByCoordinatesEqualsOrderByTimeDesc(coordinates);
@@ -64,9 +69,8 @@ public class TemperaturesController {
     @PreAuthorize("hasAuthority('SENSOR')")
     public String temperatureSave(TemperatureMessage temperatureMessage,
                                   Map<String, Object> model) {
-        CoordinateValidation coordinateValidation = new CoordinateValidation(temperatureMessage.getCoordinates());
-        TemperatureValidation temperatureValidation = new TemperatureValidation(temperatureMessage.getTemperature());
-        if (!coordinateValidation.isValid() || !temperatureValidation.isValid()) {
+        if (!coordinateValidation.isValid(temperatureMessage.getCoordinates())
+                || !temperatureValidation.isValid(temperatureMessage.getTemperature())) {
             model.put("validation error", "Your temperature data is invalid!");
             return "newTemperatureData";
         }

@@ -1,15 +1,11 @@
 package ru.webservice.application.validation;
 
 public class TemperatureValidation {
-    private String strToValidate;
-    public TemperatureValidation(String strToValidate) {
-        this.strToValidate = strToValidate;
-    }
 
-    public boolean isValid() {
+    public boolean isValid(String strToValidate) {
         try {
             Double a = Double.valueOf(strToValidate);
-            return a >= -273;
+            return a >= -80 && a <= 100;
         } catch (NumberFormatException ex) {
             return false;
         }
