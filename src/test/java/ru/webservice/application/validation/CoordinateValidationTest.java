@@ -11,8 +11,9 @@ import static org.junit.Assert.*;
 
 public class CoordinateValidationTest {
     private final Map<String, Boolean> toCoordinateValidation = new HashMap<>();
+    private final CoordinateValidation coordinateValidation = new CoordinateValidation();
 
-    /*@Before
+    @Before
     public void setUp() {
         toCoordinateValidation.put("", false);
         toCoordinateValidation.put("1 1", true);
@@ -31,9 +32,7 @@ public class CoordinateValidationTest {
     public void isValid() {
         for (Map.Entry<String, Boolean> entry : toCoordinateValidation.entrySet()) {
             final Boolean expected = entry.getValue();
-            final String testData = entry.getKey();
-            CoordinateValidation coordinateValidation = new CoordinateValidation(testData);
-            assertEquals(expected, coordinateValidation.isValid());
+            assertEquals(expected, coordinateValidation.isValid(entry.getKey()));
         }
-    }*/
+    }
 }

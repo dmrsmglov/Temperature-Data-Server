@@ -20,6 +20,7 @@ public class CoordinateValidation {
 
     public void setExpression(String expression) {
         this.expression = expression;
+        pattern = Pattern.compile(expression);
     }
 
     public Pattern getPattern() {
