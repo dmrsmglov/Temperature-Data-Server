@@ -4,7 +4,7 @@
 
 It is a simple server, which validates the temperature statistic and stores it.
 Sensor sends location data (coordinates) and temperature. The user is able to get the list of last 10 inputs, also there 
-is a possibility to filer inputs by current location.
+is a possibility to filter inputs by current location.
 
 
 To run this application:
