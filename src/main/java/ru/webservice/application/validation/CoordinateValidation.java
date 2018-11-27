@@ -8,17 +8,20 @@ import java.util.regex.Pattern;
 public class CoordinateValidation {
     private String expression = "[-]??[0-9]+\\Q.\\E??[0-9]*\\s[-]??[0-9]+\\Q.\\E??[0-9]*";
     private Pattern pattern = Pattern.compile(expression);
+    private String message = "not validated";
+    private String toValidate = "";
 
     public String getExpression() {
         return expression;
     }
 
-    public CoordinateValidation(String expression, Pattern pattern) {
+    public CoordinateValidation(String expression) {
         this.expression = expression;
-        this.pattern = pattern;
+        this.pattern = Pattern.compile(expression);
     }
 
     public void setExpression(String expression) {
+
         this.expression = expression;
         pattern = Pattern.compile(expression);
     }

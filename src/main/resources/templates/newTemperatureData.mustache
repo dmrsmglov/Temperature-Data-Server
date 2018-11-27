@@ -15,8 +15,8 @@
 </div>
 <div>
 <form action="/temperatures/newTemperatureData" method="post">
-    <div><label> Temperature: <input type="text" name="temperature"/> </label></div>
-    <div class = "list"><label> Coordinates: <input type="text" name="coordinates"/> </label></div>
+    <div><label> Temperature: <input type="text" name="temperature" placeholder="-25"/> </label></div>
+    <div class = "list"><label> Coordinates: <input type="text" name="coordinates" placeholder = "-24.0  2"/> </label></div>
     <div><input type="hidden" name="_csrf" value="{{_csrf.token}}"></div>
     <div class = "list"><input type="submit" value="Post"></div>
 </form>
