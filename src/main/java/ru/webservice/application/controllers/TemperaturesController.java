@@ -34,7 +34,7 @@ public class TemperaturesController {
 
     @RequestMapping
     public String displayTemperaturesData(Map<String, Object> model) {
-        Iterable<TemperatureMessage> messages = messageRepo.findByOrderByTimeDesc();
+        Iterable<TemperatureMessage> messages = messageRepo.findByOrderByTime();
         model.put("messages",
                 StreamSupport.stream(messages.spliterator(), false).limit(10).collect(Collectors.toList()));
         return "listOfTemperatures";
@@ -49,13 +49,13 @@ public class TemperaturesController {
             if (!coordinateValidation.isValid(coordinates)) {
                 String coordinateValidationMessage;
                 coordinateValidationMessage = coordinateValidation.getMessage();
-                messages = messageRepo.findByOrderByTimeDesc();
+                messages = messageRepo.findByOrderByTime();
                 model.put("validation error", coordinateValidationMessage);
             } else {
-                messages = messageRepo.findByCoordinatesEqualsOrderByTimeDesc(coordinates);
+                messages = messageRepo.findByCoordinatesEqualsOrderByTime(coordinates);
             }
         } else {
-            messages = messageRepo.findByOrderByTimeDesc();
+            messages = messageRepo.findByOrderByTime();
 
         }
         model.put("messages",
