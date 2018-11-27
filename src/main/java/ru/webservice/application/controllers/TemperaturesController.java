@@ -47,12 +47,16 @@ public class TemperaturesController {
         Iterable<TemperatureMessage> messages;
         if (!coordinates.equals("none")) {
             if (!coordinateValidation.isValid(coordinates)) {
-                model.put("validation error", "Your coordinates are invalid!");
-                return "listOfTemperatures";
+                String coordinateValidationMessage;
+                coordinateValidationMessage = coordinateValidation.getMessage();
+                messages = messageRepo.findByOrderByTimeDesc();
+                model.put("validation error", coordinateValidationMessage);
+            } else {
+                messages = messageRepo.findByCoordinatesEqualsOrderByTimeDesc(coordinates);
             }
-            messages = messageRepo.findByCoordinatesEqualsOrderByTimeDesc(coordinates);
         } else {
             messages = messageRepo.findByOrderByTimeDesc();
+
         }
         model.put("messages",
                 StreamSupport.stream(messages.spliterator(), false).limit(10).collect(Collectors.toList()));
@@ -71,7 +75,15 @@ public class TemperaturesController {
                                   Map<String, Object> model) {
         if (!coordinateValidation.isValid(temperatureMessage.getCoordinates())
                 || !temperatureValidation.isValid(temperatureMessage.getTemperature())) {
-            model.put("validation error", "Your temperature data is invalid!");
+            String coordinateValidationMessage = "";
+            if (!coordinateValidation.getMessage().equals("not validated")) {
+                coordinateValidationMessage = coordinateValidation.getMessage();
+            }
+            String temperatureValidationMessage = "";
+            if (!temperatureValidation.getMessage().equals("not validated")) {
+                temperatureValidationMessage = temperatureValidation.getMessage();
+            }
+            model.put("validation error", coordinateValidationMessage + "\n" + temperatureValidationMessage);
             return "newTemperatureData";
         }
         temperatureMessage.setTime(

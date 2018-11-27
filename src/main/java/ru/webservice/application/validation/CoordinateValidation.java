@@ -21,7 +21,7 @@ public class CoordinateValidation {
     }
 
     public void setExpression(String expression) {
-
+        message = "not validated";
         this.expression = expression;
         pattern = Pattern.compile(expression);
     }
@@ -34,17 +34,30 @@ public class CoordinateValidation {
         this.pattern = pattern;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     public CoordinateValidation() {
 
     }
 
     public boolean isValid(String strToValidate) {
-        Matcher matcher = pattern.matcher(strToValidate);
+        message = "validated";
+        toValidate = strToValidate;
+        Matcher matcher = pattern.matcher(toValidate);
         if (!matcher.matches()) {
+            message = "Your coordinate format is invalid! " +
+                    "Please, enter two real numbers with one space between them.";
             return false;
         }
-        Double a = Double.valueOf(strToValidate.split(" ")[0]);
-        Double b = Double.valueOf(strToValidate.split(" ")[1]);
-        return Math.abs(a) <= 90 && Math.abs(b) <= 90;
+        Double a = Double.valueOf(toValidate.split(" ")[0]);
+        Double b = Double.valueOf(toValidate.split(" ")[1]);
+        if (Math.abs(a) > 90 || Math.abs(b) > 90) {
+            message = "Your coordinate values are invalid! " +
+                    "Your absolute values of coordinates must be no more than 90.";
+            return false;
+        }
+        return true;
     }
 }
