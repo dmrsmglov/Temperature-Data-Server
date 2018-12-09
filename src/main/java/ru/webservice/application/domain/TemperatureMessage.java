@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Calendar;
 
 @Entity
 public class TemperatureMessage {
@@ -13,27 +14,27 @@ public class TemperatureMessage {
     private Integer id;
 
     private String temperature;
-    private Integer time;
+    private Long time = Calendar.getInstance().getTimeInMillis();
     private String coordinates;
 
     public TemperatureMessage() {
     }
 
-    public TemperatureMessage(String temperature, String coordinates, Integer time) {
+    public TemperatureMessage(String temperature, String coordinates) {
         this.temperature = temperature;
         this.coordinates = coordinates;
-        this.time = time;
+        this.time = Calendar.getInstance().getTimeInMillis();
     }
 
     public Integer getId() {
         return id;
     }
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 

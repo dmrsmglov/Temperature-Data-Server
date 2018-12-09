@@ -95,8 +95,6 @@ public class TemperaturesController {
         if (!isValid) {
             return "newTemperatureData";
         }
-        temperatureMessage.setTime(
-                Calendar.getInstance().get(Calendar.MILLISECOND));
 
         messageRepo.save(temperatureMessage);
         return "redirect:/temperatures";
