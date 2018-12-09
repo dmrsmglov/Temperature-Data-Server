@@ -46,7 +46,8 @@ public class TemperaturesController {
             Map<String, Object> model) {
         Iterable<TemperatureMessage> messages;
         if (!coordinates.equals("none")) {
-            if (!coordinateValidation.isValid(coordinates)) {
+            coordinateValidation.setCoordinates(coordinates);
+            if (!coordinateValidation.isValid()) {
                 String coordinateValidationMessage;
                 coordinateValidationMessage = coordinateValidation.getMessage();
                 messages = messageRepo.findByOrderByTime();
@@ -73,7 +74,8 @@ public class TemperaturesController {
     @PreAuthorize("hasAuthority('SENSOR')")
     public String temperatureSave(TemperatureMessage temperatureMessage,
                                   Map<String, Object> model) {
-        if (!coordinateValidation.isValid(temperatureMessage.getCoordinates())
+        coordinateValidation.setCoordinates(temperatureMessage.getCoordinates());
+        if (!coordinateValidation.isValid()
                 || !temperatureValidation.isValid(temperatureMessage.getTemperature())) {
             String coordinateValidationMessage = "";
             if (!coordinateValidation.getMessage().equals("not validated")) {
