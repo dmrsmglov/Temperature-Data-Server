@@ -53,7 +53,7 @@ public class CoordinateValidation {
         }
         Double a = Double.valueOf(toValidate.split(" ")[0]);
         Double b = Double.valueOf(toValidate.split(" ")[1]);
-        if (Math.abs(a) > 90 || Math.abs(b) > 90) {
+        if (Math.abs(a) > 180 || Math.abs(b) > 180) {
             message = "Your coordinate values are invalid! " +
                     "Your absolute values of coordinates must be no more than 90.";
             return false;
