@@ -12,16 +12,16 @@ To run this application:
 2. Download and install PostgreSql
     https://www.postgresql.org/download/
 3. In application.properties file you have to add this settings
-~~~
-    spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
-~~~
-You have to point port of your local database location (5432 is default), 
-also next two properties point your username and password
-~~~
-spring.datasource.username=postgres
-spring.datasource.password=
-~~~
-The database name "postgres" is default.
+    ~~~
+        spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+    ~~~
+    You have to point port of your local database location (5432 is default), 
+    also next two properties point your username and password
+    ~~~
+        spring.datasource.username=postgres
+        spring.datasource.password=
+    ~~~
+    The database name "postgres" is default.
 4. Run Application class from the Idea
  
  
