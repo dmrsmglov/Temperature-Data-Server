@@ -23,7 +23,6 @@ public class TemperatureMessage {
     public TemperatureMessage(String temperature, String coordinates) {
         this.temperature = temperature;
         this.coordinates = coordinates;
-        this.time = Calendar.getInstance().getTimeInMillis();
     }
 
     public Integer getId() {
