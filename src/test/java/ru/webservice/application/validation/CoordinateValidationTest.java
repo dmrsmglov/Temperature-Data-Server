@@ -32,7 +32,8 @@ public class CoordinateValidationTest {
     public void isValid() {
         for (Map.Entry<String, Boolean> entry : toCoordinateValidation.entrySet()) {
             final Boolean expected = entry.getValue();
-            assertEquals(expected, coordinateValidation.isValid(entry.getKey()));
+            coordinateValidation.setCoordinates(entry.getKey());
+            assertEquals(expected, coordinateValidation.isValid());
         }
     }
 }

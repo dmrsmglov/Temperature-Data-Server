@@ -75,17 +75,24 @@ public class TemperaturesController {
     public String temperatureSave(TemperatureMessage temperatureMessage,
                                   Map<String, Object> model) {
         coordinateValidation.setCoordinates(temperatureMessage.getCoordinates());
-        if (!coordinateValidation.isValid()
-                || !temperatureValidation.isValid(temperatureMessage.getTemperature())) {
+        temperatureValidation.setTemperature(temperatureMessage.getTemperature());
+        boolean isValid = true;
+        if (!coordinateValidation.isValid()) {
+            isValid = false;
             String coordinateValidationMessage = "";
-            if (!coordinateValidation.getMessage().equals("not validated")) {
+            if (!coordinateValidation.getMessage().equals("valid")) {
                 coordinateValidationMessage = coordinateValidation.getMessage();
             }
+            model.put("validation error", coordinateValidationMessage);
+        } else if (!temperatureValidation.isValid()) {
+            isValid = false;
             String temperatureValidationMessage = "";
-            if (!temperatureValidation.getMessage().equals("not validated")) {
+            if (!temperatureValidation.getMessage().equals("valid")) {
                 temperatureValidationMessage = temperatureValidation.getMessage();
             }
-            model.put("validation error", coordinateValidationMessage + "\n" + temperatureValidationMessage);
+            model.put("validation error", temperatureValidationMessage);
+        }
+        if (!isValid) {
             return "newTemperatureData";
         }
         temperatureMessage.setTime(

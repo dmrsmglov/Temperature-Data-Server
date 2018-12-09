@@ -33,7 +33,8 @@ public class TemperatureValidationTest {
         for (Map.Entry<String, Boolean> entry : toTemperatureValidation.entrySet()) {
             final Boolean expected = entry.getValue();
             final String testData = entry.getKey();
-            assertEquals(expected, temperatureValidation.isValid(testData));
+            temperatureValidation.setTemperature(testData);
+            assertEquals(expected, temperatureValidation.isValid());
         }
     }
 }

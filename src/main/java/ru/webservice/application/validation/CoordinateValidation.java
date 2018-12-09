@@ -19,10 +19,6 @@ public class CoordinateValidation {
         return message;
     }
 
-    public CoordinateValidation() {
-
-    }
-
     public boolean isValid() {
         if (coordinates.equals("")) {
             message = "Field coordinates is empty. Nothing to validate.";
@@ -41,6 +37,7 @@ public class CoordinateValidation {
                     "Your absolute values of coordinates must be less than 180.";
             return false;
         }
+        message = "valid";
         return true;
     }
 }
