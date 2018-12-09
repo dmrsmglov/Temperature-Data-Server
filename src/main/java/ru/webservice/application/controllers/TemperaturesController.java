@@ -12,6 +12,7 @@ import ru.webservice.application.validation.CoordinateValidation;
 import ru.webservice.application.validation.TemperatureValidation;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -34,9 +35,9 @@ public class TemperaturesController {
 
     @RequestMapping
     public String displayTemperaturesData(Map<String, Object> model) {
-        Iterable<TemperatureMessage> messages = messageRepo.findByOrderByTime();
+        List<TemperatureMessage> messages = messageRepo.findByOrderByTime();
         model.put("messages",
-                StreamSupport.stream(messages.spliterator(), false).limit(10).collect(Collectors.toList()));
+                messages.stream().limit(10).collect(Collectors.toList()));
         return "listOfTemperatures";
     }
 
@@ -44,7 +45,7 @@ public class TemperaturesController {
     public String filterTemperaturesData(
             @RequestParam(name = "coordinates", required = false, defaultValue = "none") String coordinates,
             Map<String, Object> model) {
-        Iterable<TemperatureMessage> messages;
+        List<TemperatureMessage> messages;
         if (!coordinates.equals("none")) {
             coordinateValidation.setCoordinates(coordinates);
             if (!coordinateValidation.isValid()) {
@@ -60,7 +61,7 @@ public class TemperaturesController {
 
         }
         model.put("messages",
-                StreamSupport.stream(messages.spliterator(), false).limit(10).collect(Collectors.toList()));
+                messages.stream().limit(10).collect(Collectors.toList()));
         return "listOfTemperatures";
     }
 
