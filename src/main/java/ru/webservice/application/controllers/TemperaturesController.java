@@ -40,14 +40,13 @@ public class TemperaturesController {
 
     @PostMapping("/filter")
     public String filterTemperaturesData(
-            @RequestParam(name = "coordinates", required = false, defaultValue = "none") String coordinates,
+            @RequestParam(name = "coordinates") String coordinates,
             Map<String, Object> model) {
         List<TemperatureMessage> messages;
-        if (!coordinates.equals("none")) {
+        if (!coordinates.equals("")) {
             coordinateValidation.setCoordinates(coordinates);
             if (!coordinateValidation.isValid()) {
-                String coordinateValidationMessage;
-                coordinateValidationMessage = coordinateValidation.getMessage();
+                String coordinateValidationMessage = coordinateValidation.getMessage();
                 messages = messageRepo.findFirst10ByOrderByTimeDesc();
                 model.put("validation error", coordinateValidationMessage);
             } else {
