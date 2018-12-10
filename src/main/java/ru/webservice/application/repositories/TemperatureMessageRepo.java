@@ -6,6 +6,6 @@ import ru.webservice.application.domain.TemperatureMessage;
 import java.util.List;
 
 public interface TemperatureMessageRepo extends CrudRepository<TemperatureMessage, Long> {
-    List<TemperatureMessage> findByCoordinatesEqualsOrderByTime(String coordinates);
-    List<TemperatureMessage> findByOrderByTime();
+    List<TemperatureMessage> findFirst10ByCoordinatesEqualsOrderByTimeDesc(String coordinates);
+    List<TemperatureMessage> findFirst10ByOrderByTimeDesc();
 }
