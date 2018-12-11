@@ -34,8 +34,7 @@ public class RegistrationController {
 
     @PostMapping("/user")
     public String addUser(User user, Map<String, Object> model) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
-        if (userFromDb != null) {
+        if (userRepo.existsByUsername(user.getUsername())) {
             model.put("message", "User exists!");
             return "userRegistration";
         }
@@ -53,8 +52,7 @@ public class RegistrationController {
 
     @PostMapping("/sensor")
     public String addSensor(User sensor, Map<String, Object> model) {
-        User sensorFromDb = userRepo.findByUsername(sensor.getUsername());
-        if (sensorFromDb != null) {
+        if (userRepo.existsByUsername(sensor.getUsername())) {
             model.put("message", "Sensor exists!");
             return "sensorRegistration";
         }
