@@ -1,9 +1,14 @@
 package ru.webservice.application.validation;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.webservice.application.service.TemperatureService;
+
 public class TemperatureValidation {
     private String message = "not validated";
     private String temperature = "";
-    private double extremeTemperature = 100;
+
+    @Autowired
+    private TemperatureService temperatureService;
 
     public String getMessage() {
         return message;
@@ -14,6 +19,7 @@ public class TemperatureValidation {
     }
 
     public boolean isValid() {
+        double extremeTemperature = temperatureService.getExtremeTemperature();
         if (temperature.equals("")) {
             message = "Field temperature is empty. Nothing to validate.";
             return false;
