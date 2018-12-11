@@ -16,6 +16,7 @@ public class TemperatureValidation {
     public boolean isValid() {
         if (temperature.equals("")) {
             message = "Field temperature is empty. Nothing to validate.";
+            return false;
         }
         double temp;
         try {
