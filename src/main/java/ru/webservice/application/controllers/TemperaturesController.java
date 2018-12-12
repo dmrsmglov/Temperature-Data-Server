@@ -1,6 +1,7 @@
 package ru.webservice.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,18 +17,12 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/temperatures")
-public class TemperaturesController {
+public abstract class TemperaturesController {
     private final TemperatureMessageRepo messageRepo;
-    private final CoordinateValidation coordinateValidation;
-    private final TemperatureValidation temperatureValidation;
 
     @Autowired
-    public TemperaturesController(TemperatureMessageRepo messageRepo,
-                                  CoordinateValidation coordinateValidation,
-                                  TemperatureValidation temperatureValidation) {
+    public TemperaturesController(TemperatureMessageRepo messageRepo) {
         this.messageRepo = messageRepo;
-        this.coordinateValidation = coordinateValidation;
-        this.temperatureValidation = temperatureValidation;
     }
 
     @RequestMapping
@@ -42,6 +37,7 @@ public class TemperaturesController {
             @RequestParam(name = "coordinates", required = false, defaultValue = "") String coordinates,
             Map<String, Object> model) {
         List<TemperatureMessage> messages;
+        CoordinateValidation coordinateValidation = getCoordinateValidation();
         if (!coordinates.equals("")) {
             coordinateValidation.setCoordinates(coordinates);
             if (!coordinateValidation.isValid()) {
@@ -59,6 +55,12 @@ public class TemperaturesController {
         return "listOfTemperatures";
     }
 
+    @Lookup
+    abstract CoordinateValidation getCoordinateValidation();
+
+    @Lookup
+    abstract TemperatureValidation getTemperatureValidation();
+
     @RequestMapping("/newTemperatureData")
     @PreAuthorize("hasAuthority('SENSOR')")
     public String addTemperature(Map<String, Object> model) {
@@ -69,8 +71,12 @@ public class TemperaturesController {
     @PreAuthorize("hasAuthority('SENSOR')")
     public String temperatureSave(TemperatureMessage temperatureMessage,
                                   Map<String, Object> model) {
+        CoordinateValidation coordinateValidation = getCoordinateValidation();
+        TemperatureValidation temperatureValidation = getTemperatureValidation();
+
         coordinateValidation.setCoordinates(temperatureMessage.getCoordinates());
         temperatureValidation.setTemperature(temperatureMessage.getTemperature());
+
         boolean isValid = true;
         if (!coordinateValidation.isValid()) {
             isValid = false;
