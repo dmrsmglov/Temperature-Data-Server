@@ -37,9 +37,9 @@ public class TemperaturesController {
         return "listOfTemperatures";
     }
 
-    @PostMapping("/filter")
+    @RequestMapping("/filter")
     public String filterTemperaturesData(
-            @RequestParam(name = "coordinates") String coordinates,
+            @RequestParam(name = "coordinates", required = false, defaultValue = "") String coordinates,
             Map<String, Object> model) {
         List<TemperatureMessage> messages;
         if (!coordinates.equals("")) {
