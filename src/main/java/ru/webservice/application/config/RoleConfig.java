@@ -22,7 +22,7 @@ public class RoleConfig {
     @Value("${roles.authenticated.user}")
     private String user;
 
-    @Value("${roles.authenticated.sensor")
+    @Value("${roles.authenticated.sensor}")
     private String sensor;
 
     @EventListener

@@ -1,9 +1,9 @@
 package ru.webservice.application.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.webservice.application.domain.Role;
 import ru.webservice.application.domain.User;
 
 import org.springframework.stereotype.Controller;
@@ -40,9 +40,7 @@ public class RegistrationController {
             model.put("message", "User exists!");
             return "userRegistration";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singleton(roleRepo.findByName("USER")));
-        userRepo.save(user);
+        add(user, "USER");
         return "redirect:/temperatures";
     }
 
@@ -57,9 +55,13 @@ public class RegistrationController {
             model.put("message", "Sensor exists!");
             return "sensorRegistration";
         }
-        sensor.setPassword(passwordEncoder.encode(sensor.getPassword()));
-        sensor.setRoles(Collections.singleton(roleRepo.findByName("SENSOR")));
-        userRepo.save(sensor);
+        add(sensor, "SENSOR");
         return "redirect:/temperatures";
+    }
+
+    private void add(User user, String role) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(roleRepo.findByName(role)));
+        userRepo.save(user);
     }
 }
