@@ -9,6 +9,7 @@ import ru.webservice.application.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.webservice.application.repositories.RoleRepo;
 import ru.webservice.application.repositories.UserRepo;
 
 import java.util.Collections;
@@ -18,12 +19,13 @@ import java.util.Map;
 @RequestMapping("/registration")
 public class RegistrationController {
     private final UserRepo userRepo;
+    private final RoleRepo roleRepo;
     private final PasswordEncoder passwordEncoder;
 
-
     @Autowired
-    public RegistrationController(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+    public RegistrationController(UserRepo userRepo, RoleRepo roleRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -39,8 +41,7 @@ public class RegistrationController {
             return "userRegistration";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(roleRepo.findByName("USER")));
         userRepo.save(user);
         return "redirect:/temperatures";
     }
@@ -56,9 +57,8 @@ public class RegistrationController {
             model.put("message", "Sensor exists!");
             return "sensorRegistration";
         }
-        sensor.setActive(true);
         sensor.setPassword(passwordEncoder.encode(sensor.getPassword()));
-        sensor.setRoles(Collections.singleton(Role.SENSOR));
+        sensor.setRoles(Collections.singleton(roleRepo.findByName("SENSOR")));
         userRepo.save(sensor);
         return "redirect:/temperatures";
     }
