@@ -11,16 +11,12 @@ import static org.junit.Assert.*;
 
 public class TemperatureValidationTest {
     private final TemperatureValidation temperatureValidation= new TemperatureValidation();
-    private final Map<String, Boolean> toTemperatureValidation = new HashMap<>();
+    private final Map<Double, Boolean> toTemperatureValidation = new HashMap<>();
 
     @Before
     public void setUp() {
-        toTemperatureValidation.put("-500", false);
-        toTemperatureValidation.put("25", true);
-        toTemperatureValidation.put("some temperature", false);
-        toTemperatureValidation.put("the temperature is 12 degrees", false);
-        toTemperatureValidation.put("", false);
-        toTemperatureValidation.put(" ", false);
+        toTemperatureValidation.put(-500d, false);
+        toTemperatureValidation.put(25d, true);
     }
 
     @After
@@ -30,9 +26,9 @@ public class TemperatureValidationTest {
 
     @Test
     public void isValid() {
-        for (Map.Entry<String, Boolean> entry : toTemperatureValidation.entrySet()) {
+        for (Map.Entry<Double, Boolean> entry : toTemperatureValidation.entrySet()) {
             final Boolean expected = entry.getValue();
-            final String testData = entry.getKey();
+            final Double testData = entry.getKey();
             temperatureValidation.setTemperature(testData);
             assertEquals(expected, temperatureValidation.isValid());
         }

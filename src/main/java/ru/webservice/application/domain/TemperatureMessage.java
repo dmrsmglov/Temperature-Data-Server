@@ -13,14 +13,14 @@ public class TemperatureMessage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String temperature;
+    private double temperature;
     private Long time = Calendar.getInstance().getTimeInMillis();
     private String coordinates;
 
     public TemperatureMessage() {
     }
 
-    public TemperatureMessage(String temperature, String coordinates) {
+    public TemperatureMessage(double temperature, String coordinates) {
         this.temperature = temperature;
         this.coordinates = coordinates;
     }
@@ -42,11 +42,11 @@ public class TemperatureMessage {
 
     }
 
-    public String getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(String temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 

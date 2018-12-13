@@ -9,19 +9,19 @@
     Post new temperature data
 </div>
 <div>
-{{#validation error}}
+    {{#validation error}}
     {{validation error}}
-{{/validation error}}
+    {{/validation error}}
 </div>
 <div>
-<form action="/temperatures/newTemperatureData" method="post">
-    <div><label> Temperature, D: <input type="text" name="temperature" placeholder="-25"/> </label></div>
-    <div class = "list"><label> Coordinates: <input type="text" name="coordinates" placeholder = "-24.0  2."/> </label></div>
-    <div class = "list"><input type="submit" value="Post"></div>
-</form>
+    <form action="/temperatures/newTemperatureData" method="post">
+        <div><label> Temperature, D: <input type="number" step = "0.00001" name="temperature" placeholder="-25"/> </label></div>
+        <div class = "list"><label> Coordinates: <input type="text" name="coordinates" placeholder = "-24.0  2."/> </label></div>
+        <div class = "list"><input type="submit" value="Post"></div>
+    </form>
 </div>
 <div>
-<a href="/temperatures">Go back</a>
+    <a href="/temperatures">Go back</a>
 </div>
 </body>
 </html>
