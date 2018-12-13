@@ -1,18 +1,13 @@
 package ru.webservice.application.validation;
 
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
 public class CoordinateValidation {
-    private String expression = "[-]??[0-9]+\\Q.\\E??[0-9]*\\s[-]??[0-9]+\\Q.\\E??[0-9]*";
-    private Pattern pattern = Pattern.compile(expression);
-    private String message = "not validated";
-    private String coordinates = "";
+    private String message = "Coordinates are empty.";
+    private double latitude;
+    private double longitude;
 
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
+    public void setCoordinates(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getMessage() {
@@ -20,19 +15,8 @@ public class CoordinateValidation {
     }
 
     public boolean isValid() {
-        if (coordinates.equals("")) {
-            message = "Field coordinates is empty. Nothing to validate.";
-            return false;
-        }
-        Matcher matcher = pattern.matcher(coordinates);
-        if (!matcher.matches()) {
-            message = "Your coordinate format is invalid! " +
-                    "Please, enter two real numbers with one space between them.";
-            return false;
-        }
-        Double a = Double.valueOf(coordinates.split(" ")[0]);
-        Double b = Double.valueOf(coordinates.split(" ")[1]);
-        if (Math.abs(a) >= 180 || Math.abs(b) >= 180) {
+
+        if (Math.abs(latitude) >= 180 || Math.abs(longitude) >= 180) {
             message = "Your coordinate values are invalid! " +
                     "Your absolute values of coordinates must be less than 180.";
             return false;

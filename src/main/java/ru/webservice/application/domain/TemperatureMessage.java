@@ -15,14 +15,16 @@ public class TemperatureMessage {
 
     private double temperature;
     private Long time = Calendar.getInstance().getTimeInMillis();
-    private String coordinates;
+    private double latitude;
+    private double longitude;
 
     public TemperatureMessage() {
     }
 
-    public TemperatureMessage(double temperature, String coordinates) {
+    public TemperatureMessage(double temperature, double latitude, double longitude) {
         this.temperature = temperature;
-        this.coordinates = coordinates;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Integer getId() {
@@ -50,11 +52,19 @@ public class TemperatureMessage {
         this.temperature = temperature;
     }
 
-    public String getCoordinates() {
-        return coordinates;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

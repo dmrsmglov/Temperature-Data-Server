@@ -15,8 +15,10 @@
 </div>
 
 <div>
+    Your location:
     <form action="/temperatures/filter" method="post">
-        <div><label> Your Location: <input type="text" name="coordinates"/> </label></div>
+        <div><label> Latitude: <input type="number" step="any" name="latitude"/> </label></div>
+        <div class="list"><label> Longitude: <input type="number" step="any" name="longitude"/> </label></div>
         <div class="list"><input type="submit" value="Filter"/></div>
     </form>
 </div>
@@ -27,7 +29,10 @@
         <span>Temperature, D: {{temperature}}</span>
     </div>
     <div class="list">
-        <span>Coordinates: {{coordinates}}</span>
+        <span>Latitude: {{latitude}}</span>
+    </div>
+    <div class="list">
+        <span>Longitude: {{longitude}}</span>
     </div>
     {{/messages}}
 

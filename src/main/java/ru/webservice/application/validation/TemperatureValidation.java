@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.webservice.application.service.TemperatureService;
 
 public class TemperatureValidation {
-    private String message = "not validated";
+    private String message = "Temperature is empty";
     private double temperature;
 
     @Autowired

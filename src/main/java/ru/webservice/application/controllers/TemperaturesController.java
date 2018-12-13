@@ -34,22 +34,18 @@ public abstract class TemperaturesController {
 
     @RequestMapping("/filter")
     public String filterTemperaturesData(
-            @RequestParam(name = "coordinates", required = false, defaultValue = "") String coordinates,
+            @RequestParam(name = "latitude", required = false, defaultValue = "180") double latitude,
+            @RequestParam(name = "longitude", required = false, defaultValue = "180") double longitude,
             Map<String, Object> model) {
         List<TemperatureMessage> messages;
         CoordinateValidation coordinateValidation = getCoordinateValidation();
-        if (!coordinates.equals("")) {
-            coordinateValidation.setCoordinates(coordinates);
-            if (!coordinateValidation.isValid()) {
-                String coordinateValidationMessage = coordinateValidation.getMessage();
-                messages = messageRepo.findFirst10ByOrderByTimeDesc();
-                model.put("validation error", coordinateValidationMessage);
-            } else {
-                messages = messageRepo.findFirst10ByCoordinatesEqualsOrderByTimeDesc(coordinates);
-            }
-        } else {
+        coordinateValidation.setCoordinates(latitude, longitude);
+        if (!coordinateValidation.isValid()) {
+            String coordinateValidationMessage = coordinateValidation.getMessage();
             messages = messageRepo.findFirst10ByOrderByTimeDesc();
-
+            model.put("validation error", coordinateValidationMessage);
+        } else {
+            messages = messageRepo.findFirst10ByLatitudeEqualsAndLongitudeEqualsOrderByTimeDesc(latitude, longitude);
         }
         model.put("messages", messages);
         return "listOfTemperatures";
@@ -74,7 +70,7 @@ public abstract class TemperaturesController {
         CoordinateValidation coordinateValidation = getCoordinateValidation();
         TemperatureValidation temperatureValidation = getTemperatureValidation();
 
-        coordinateValidation.setCoordinates(temperatureMessage.getCoordinates());
+        coordinateValidation.setCoordinates(temperatureMessage.getLatitude(), temperatureMessage.getLongitude());
         temperatureValidation.setTemperature(temperatureMessage.getTemperature());
 
         boolean isValid = true;
